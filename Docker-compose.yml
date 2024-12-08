@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres_auth_container
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+        - auth_network
+
+  grpc_server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: grpc_auth_server
+    depends_on:
+      - postgres
+    ports:
+      - "8082:8082"
+    environment:
+      DB_HOST: postgres_auth_container
+      DB_PORT: 5432
+      DB_USER: admin
+      DB_PASSWORD: 123
+      DB_NAME: auth
+    networks:
+      - auth_network
+
+volumes:
+    postgres_data:
+
+networks:
+    auth_network:

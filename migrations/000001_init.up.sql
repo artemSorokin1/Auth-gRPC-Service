@@ -1,0 +1,13 @@
+CREATE TABLE IF NOT EXISTS users (
+  id SERIAL NOT NULL PRIMARY KEY,
+  username TEXT NOT NULL,
+  email TEXT NOT NULL,
+  passHash TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS admins (
+    id SERIAL NOT NULL PRIMARY KEY,
+    username text NOT NULL,
+    email text NOT NULL
+);
+
