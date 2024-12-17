@@ -16,6 +16,7 @@ func NewToken(user *models.User, secretKey string) (string, error) {
 	claims["user_id"] = user.ID
 	claims["exp"] = time.Now().Add(tokenTTL).Unix()
 	claims["email"] = user.Email
+	claims["username"] = user.Username
 
 	tokenString, err := token.SignedString([]byte(secretKey))
 	if err != nil {

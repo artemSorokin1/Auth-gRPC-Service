@@ -4,8 +4,9 @@ import (
 	"auth_service/internal/jwt"
 	"auth_service/internal/models"
 	"auth_service/internal/repositiry/storage"
-	"auth_service/pkg/api"
+	//"auth_service/pkg/api"
 	"context"
+	api "github.com/artemSorokin1/Auth-proto/protos/gen/protos/proto"
 	"golang.org/x/crypto/bcrypt"
 	"log/slog"
 )

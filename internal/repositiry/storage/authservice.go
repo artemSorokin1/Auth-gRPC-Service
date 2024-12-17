@@ -106,7 +106,10 @@ func (s *Storage) UserRole(username string) (string, error) {
 }
 
 func (s *Storage) IsAdmin(userId int64) (bool, error) {
-	var user models.User
+	type req struct {
+		Username string `db:"username"`
+	}
+	var user req
 	err := s.DB.Get(&user, "SELECT username FROM admins WHERE id = $1", userId)
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
@@ -117,4 +120,21 @@ func (s *Storage) IsAdmin(userId int64) (bool, error) {
 	}
 
 	return true, nil
+}
+
+func (s *Storage) CheckUser(username, email string) error {
+	var user models.User
+	err := s.DB.Get(&user, "SELECT * FROM users WHERE username = $1 or email = $2", username, email)
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil
+		}
+		return ErrUserExist
+	}
+
+	if user.ID > 0 {
+		return ErrUserExist
+	}
+
+	return nil
 }

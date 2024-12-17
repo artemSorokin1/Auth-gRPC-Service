@@ -3,8 +3,8 @@ package grpc
 import (
 	"auth_service/internal/config"
 	"auth_service/internal/repositiry/storage"
-	"auth_service/pkg/api"
 	"fmt"
+	api "github.com/artemSorokin1/Auth-proto/protos/gen/protos/proto"
 	"google.golang.org/grpc"
 	"log/slog"
 	"net"
